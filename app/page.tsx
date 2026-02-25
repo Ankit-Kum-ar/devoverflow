@@ -1,6 +1,6 @@
 function Home() {
   return (
-    <div>
+    <div className="h1-bold">
       Hello World !!
     </div>
   )
