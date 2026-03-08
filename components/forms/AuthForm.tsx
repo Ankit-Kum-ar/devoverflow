@@ -40,6 +40,7 @@ export const AuthForm = <T extends FieldValues>({
 }: AuthFormProps<T>) => {
   const form = useForm<T>({
     resolver: zodResolver(
+      // @ts-ignore
       schema as unknown as z.ZodType<T>
     ) as unknown as Resolver<T>,
     defaultValues: defaultValues as DefaultValues<T>,
