@@ -8,15 +8,6 @@ async function Home() {
   return (
     <div className="h1-bold">
       Hello World !!
-      <form
-        className="px-10 pt-[100px]"
-        action={async () => {
-          "use server";
-          await signOut({ redirectTo: ROUTES.SIGN_IN });
-        }}
-      >
-        <Button type="submit">Log out</Button>
-      </form>
     </div>
   );
 }
