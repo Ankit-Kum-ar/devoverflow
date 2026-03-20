@@ -1,0 +1,33 @@
+export const techMap: { [key: string]: string } = {
+  javascript: "devicon-javascript-plain",
+  typescript: "devicon-typescript-plain",
+  python: "devicon-python-plain",
+  java: "devicon-java-plain",
+  c: "devicon-c-plain",
+  cplusplus: "devicon-cplusplus-plain",
+  csharp: "devicon-csharp-plain",
+  go: "devicon-go-plain",
+  rust: "devicon-rust-plain",
+  php: "devicon-php-plain",
+  reactquery: "devicon-jquery-plain",
+
+  html5: "devicon-html5-plain",
+  css3: "devicon-css3-plain",
+  react: "devicon-react-original",
+  vuejs: "devicon-vuejs-plain",
+  angular: "devicon-angular-plain",
+  nextjs: "devicon-nextjs-original",
+  nodejs: "devicon-nodejs-plain",
+
+  docker: "devicon-docker-plain",
+  kubernetes: "devicon-kubernetes-plain",
+  git: "devicon-git-plain",
+  github: "devicon-github-original",
+  linux: "devicon-linux-plain",
+  ubuntu: "devicon-ubuntu-plain",
+
+  mongodb: "devicon-mongodb-plain",
+  mysql: "devicon-mysql-plain",
+  postgresql: "devicon-postgresql-plain",
+  redis: "devicon-redis-plain",
+};
