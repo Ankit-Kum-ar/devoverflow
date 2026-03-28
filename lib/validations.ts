@@ -36,3 +36,22 @@ export const SignUpSchema = z.object({
       "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"
     ),
 });
+
+export const AskQuestionSchema = z.object({
+  title: z
+    .string()
+    .min(1, "Title is requried.")
+    .max(100, "Title can't exceed 100 characters."),
+
+  content: z.string().min(1, "Body is required."),
+
+  tags: z
+    .array(
+      z
+        .string()
+        .min(1, "Tag is requried.")
+        .max(30, "Title can't exceed 30 characters.")
+    )
+    .min(1, "At least one tag is required.")
+    .max(3, "Can't add more than 3 tags."),
+});
