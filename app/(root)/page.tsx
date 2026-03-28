@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import ROUTES from "../constants/route";
 import LocalSearch from "@/components/search/LocalSearch";
+import HomeFilter from "@/components/filters/HomeFilter";
+import QuestionCard from "@/components/cards/QuestionCard";
 
 const questions = [
   {
@@ -12,16 +14,17 @@ const questions = [
     tags: [
       { _id: "1", name: "css" },
       { _id: "2", name: "html" },
-      { _id: "3", name: "web-development" },
+      { _id: "3", name: "React JS" },
     ],
     author: {
       _id: "1",
       name: "John Doe",
+      image: "/images/avatar.png"
     },
     upvotes: 10,
     answers: 5,
     views: 100,
-    createdAt: "2023-10-01T12:00:00Z",
+    createdAt: new Date("2023-10-01T12:00:00Z"),
   },
   {
     _id: "2",
@@ -31,16 +34,17 @@ const questions = [
     tags: [
       { _id: "1", name: "css" },
       { _id: "2", name: "html" },
-      { _id: "3", name: "web-development" },
+      { _id: "3", name: "Express JS" },
     ],
     author: {
-      _id: "1",
-      name: "John Doe",
+      _id: "2",
+      name: "John Dic",
+      image: "/images/avatar.png"
     },
     upvotes: 10,
     answers: 5,
     views: 100,
-    createdAt: "2023-10-01T12:00:00Z",
+    createdAt: new Date("2024-10-01T12:00:00Z"),
   },
 ];
 
@@ -79,9 +83,10 @@ async function Home({ searchParams }: SearchParams) {
           route="/"
         />
       </section>
+      <HomeFilter />
       <div className="mt-10 flex w-full flex-col gap-6">
         {filteredQuestions.map((question) => (
-          <h1 key={question._id}>{question.title}</h1>
+          <QuestionCard key={question._id} question={question} />
         ))}
       </div>
     </>
