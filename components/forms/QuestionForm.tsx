@@ -13,6 +13,15 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { useRef } from "react";
+import { MDXEditorMethods } from "@mdxeditor/editor";
+import dynamic from "next/dynamic";
+
+// This is the only place InitializedMDXEditor is imported directly.
+const Editor = dynamic(() => import("@/components/editor"), {
+  // Make sure we turn SSR off
+  ssr: false
+})
 
 const QuestionForm = () => {
   const form = useForm({
@@ -24,6 +33,7 @@ const QuestionForm = () => {
     },
   });
 
+  const editorRef = useRef<MDXEditorMethods>(null);
   const handleCreateQuestion = () => {};
   return (
     <Form {...form}>
@@ -62,7 +72,9 @@ const QuestionForm = () => {
                 Detailed explanation of your problem{" "}
                 <span className="text-primary-500">*</span>
               </FormLabel>
-              <FormControl>Editor</FormControl>
+              <FormControl>
+                <Editor editorRef={editorRef} value={field.value} fieldChange={field.onChange} />
+              </FormControl>
               <FormDescription className="body-regular text-light-500 mt-2.5">
                 Introduce your problem and expand on what you've put in the
                 title.
