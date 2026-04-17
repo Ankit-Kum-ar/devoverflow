@@ -1,33 +1,33 @@
-import User from "@/database/user.model";
+import Account from "@/database/account.model";
 import handleError from "@/lib/handlers/error";
 import { NotFoundError, ValidationError } from "@/lib/http-errors";
 import dbConnect from "@/lib/mongoose";
-import { UserSchema } from "@/lib/validations";
+import { AccountSchema } from "@/lib/validations";
 import { APIErrorResponse } from "@/types/global";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
-  const { email } = await request.json();
-  if (!email) {
-    throw new Error("Email is required");
+  const { providerAccountId } = await request.json();
+  if (!providerAccountId) {
+    throw new Error("Provider Account ID is required");
   }
 
   try {
     await dbConnect();
-    const validatedData = UserSchema.partial().safeParse({ email });
+    const validatedData = AccountSchema.partial().safeParse({ providerAccountId });
 
     if (!validatedData.success) {
       throw new ValidationError(validatedData.error.flatten().fieldErrors);
     }
 
-    const user = await User.findOne({ email }).select("-password").lean();
-    if (!user) {
-      throw new NotFoundError("User");
+    const account = await Account.findOne({ providerAccountId }).lean();
+    if (!account) {
+      throw new NotFoundError("Account with this provider account ID does not exist.");
     }
     return NextResponse.json(
       {
         success: true,
-        data: user,
+        data: account,
       },
       { status: 200 }
     );
