@@ -5,8 +5,7 @@ import LocalSearch from "@/components/search/LocalSearch";
 import HomeFilter from "@/components/filters/HomeFilter";
 import QuestionCard from "@/components/cards/QuestionCard";
 import handleError from "@/lib/handlers/error";
-import dbConnect from "@/lib/mongoose";
-import logger from "@/lib/logger";
+import { api } from "@/lib/api";
 
 const questions = [
   {
@@ -53,7 +52,7 @@ const questions = [
 
 const test = async () => {
   try {
-    await dbConnect();
+    return await api.users.getAll();
   } catch (error) {
     return handleError(error);
   }
@@ -67,8 +66,8 @@ interface SearchParams {
 }
 
 async function Home({ searchParams }: SearchParams) {
-  const errorResponse = await test();
-  logger.info("Database connection test completed");
+  const users = await test();
+  console.log("Users:", users);
   const { query = "" } = await searchParams; // Await the resolution of the searchParams promise to access the query parameters from the URL. This allows the Home component to utilize the query parameters for functionalities such as filtering or searching questions based on user input.
 
   const filteredQuestions = questions.filter((question) =>
