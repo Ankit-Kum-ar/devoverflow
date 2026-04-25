@@ -1,0 +1,27 @@
+sequenceDiagram
+    participant User
+    participant NextApp as Next.js App
+    participant NextAuth
+    participant OAuth as OAuth Provider (GitHub/Google)
+    participant DB as MongoDB
+
+    User->>NextApp: Initiates social login
+    NextApp->>NextAuth: Redirects to NextAuth
+    NextAuth->>OAuth: Redirects to OAuth provider
+
+    OAuth-->>User: Prompts for login
+    User->>OAuth: Provides credentials
+
+    OAuth-->>NextAuth: Returns OAuth token
+
+    NextAuth->>DB: Checks if account exists
+
+    alt Account doesn't exist
+        NextAuth->>DB: Creates new Account
+        NextAuth->>DB: Creates new User
+    else Account exists
+        DB-->>NextAuth: Returns existing User
+    end
+
+    NextAuth->>NextAuth: Generates session
+    NextAuth-->>NextApp: Returns session
