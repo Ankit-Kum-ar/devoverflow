@@ -4,8 +4,7 @@ import ROUTES from "../constants/route";
 import LocalSearch from "@/components/search/LocalSearch";
 import HomeFilter from "@/components/filters/HomeFilter";
 import QuestionCard from "@/components/cards/QuestionCard";
-import handleError from "@/lib/handlers/error";
-import { api } from "@/lib/api";
+import { auth } from "@/auth";
 
 const questions = [
   {
@@ -50,14 +49,6 @@ const questions = [
   },
 ];
 
-const test = async () => {
-  try {
-    return await api.users.getAll();
-  } catch (error) {
-    return handleError(error);
-  }
-}
-
 // This interface defines the expected structure of the search parameters that will be passed to the Home component. The searchParams property is a Promise that resolves to an object containing key-value pairs, where each key is a string representing the name of a query parameter and each value is a string representing the corresponding value of that parameter. This allows the Home component to access and utilize the search parameters from the URL for functionalities such as filtering or searching questions based on user input.
 interface SearchParams {
   searchParams: Promise<{
@@ -66,8 +57,8 @@ interface SearchParams {
 }
 
 async function Home({ searchParams }: SearchParams) {
-  const users = await test();
-  console.log("Users:", users);
+  const session = await auth();
+  console.log("Session: ",session);
   const { query = "" } = await searchParams; // Await the resolution of the searchParams promise to access the query parameters from the URL. This allows the Home component to utilize the query parameters for functionalities such as filtering or searching questions based on user input.
 
   const filteredQuestions = questions.filter((question) =>

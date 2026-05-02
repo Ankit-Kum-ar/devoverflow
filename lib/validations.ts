@@ -13,11 +13,7 @@ export const SignUpSchema = z.object({
   username: z
     .string()
     .min(3, "Username must be at least 3 characters")
-    .max(20, "Username must be less than 20 characters")
-    .regex(
-      /^[a-zA-Z0-9_]+$/,
-      "Username can only contain letters, numbers, and underscores"
-    ),
+    .max(20, "Username must be less than 20 characters"),
 
   name: z
     .string()
@@ -64,11 +60,7 @@ export const UserSchema = z.object({
   username: z
     .string()
     .min(3, "Username must be at least 3 characters")
-    .max(20, "Username must be less than 20 characters")
-    .regex(
-      /^[a-zA-Z0-9_]+$/,
-      "Username can only contain letters, numbers, and underscores"
-    ),
+    .max(20, "Username must be less than 20 characters"),
   email: z.string().email("Please provide a valid email address"),
   bio: z.string().optional(),
   image: z.string().url("Please provide a valid URL for the image").optional(),
@@ -95,4 +87,18 @@ export const AccountSchema = z.object({
     .optional(),
   provider: z.string().min(1, "Provider is required"),
   providerAccountId: z.string().min(1, "Provider Account ID is required"),
+});
+
+export const signInWithOAuthSchema = z.object({
+  provider: z.string().min(1, "Provider is required"),
+  providerAccountId: z.string().min(1, "Provider Account ID is required"),
+  user: z.object({
+    name: z.string().min(1, "Name is required"),
+    username: z.string().min(3, "Username must be at least 3 characters"),
+    email: z.string().email("Please provide a valid email address"),
+    image: z
+      .string()
+      .url("Please provide a valid URL for the image")
+      .optional(),
+  }),
 });

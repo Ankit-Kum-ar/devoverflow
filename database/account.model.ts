@@ -9,6 +9,8 @@ export interface IAccount {
   providerAccountId: string;
 }
 
+export interface IAccountDoc extends IAccount, Document {}
+
 const accountSchema = new Schema(
   {
     userId: { type: Schema.Types.ObjectId, ref: "User", required: true },

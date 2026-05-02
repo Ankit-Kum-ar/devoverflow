@@ -5,6 +5,17 @@ import { IAccount } from "@/database/account.model";
 const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:3000/api";
 
 export const api = {
+  auth: {
+    oAuthSignIn: ({
+      provider,
+      providerAccountId,
+      user,
+    }: SignInWithOAuthParams) =>
+      fetchHandler(`${API_BASE_URL}/auth/signin-with-oauth`, {
+        method: "POST",
+        body: JSON.stringify({ provider, providerAccountId, user }),
+      }),
+  },
   users: {
     getAll: () => fetchHandler(`${API_BASE_URL}/users`),
     getById: (id: string) => fetchHandler(`${API_BASE_URL}/users/${id}`),
@@ -13,7 +24,9 @@ export const api = {
         method: "POST",
         body: JSON.stringify({ email }),
       }),
-    create: (userData: Partial<IUser>) => /// Partial<IUser> means that all properties of IUser are optional, which is useful for create and update operations where you might not have all the data available
+    create: (
+      userData: Partial<IUser> // Partial<IUser> means that all properties of IUser are optional, which is useful for create and update operations where you might not have all the data available
+    ) =>
       fetchHandler(`${API_BASE_URL}/users`, {
         method: "POST",
         body: JSON.stringify(userData),
