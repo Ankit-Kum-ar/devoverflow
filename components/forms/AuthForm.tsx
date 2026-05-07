@@ -5,7 +5,7 @@ import {
   FieldValues,
   Path,
   Resolver,
-  SubmitErrorHandler,
+  SubmitHandler,
   useForm,
 } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -22,14 +22,16 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
+import { ActionResponse } from "@/types/global";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import ROUTES from "@/app/constants/route";
 
 interface AuthFormProps<T extends FieldValues> {
   schema: z.ZodType<T>;
   defaultValues: T;
   formType: "SIGN_IN" | "SIGN_UP";
-  onSubmit: (
-    data: T
-  ) => Promise<{ success: boolean; data?: T; error?: string }>;
+  onSubmit: (data: T) => Promise<ActionResponse>;
 }
 
 export const AuthForm = <T extends FieldValues>({
@@ -38,6 +40,8 @@ export const AuthForm = <T extends FieldValues>({
   formType,
   onSubmit,
 }: AuthFormProps<T>) => {
+  const router = useRouter();
+
   const form = useForm<T>({
     resolver: zodResolver(
       // @ts-ignore
@@ -46,7 +50,21 @@ export const AuthForm = <T extends FieldValues>({
     defaultValues: defaultValues as DefaultValues<T>,
   });
 
-  const handleSubmit: SubmitErrorHandler<T> = async () => {};
+  const handleSubmit: SubmitHandler<T> = async (data) => {
+    const result = (await onSubmit(data)) as ActionResponse;
+    if (result?.success) {
+      toast.success(
+        formType === "SIGN_IN"
+          ? "Signed in successfully!"
+          : "Signed up successfully!"
+      );
+      router.push(ROUTES.HOME); // Redirect to home page after successful sign-in or sign-up
+    } else {
+      toast.error(
+        result?.error?.message || "Something went wrong. Please try again."
+      );
+    }
+  };
 
   const buttonText = formType === "SIGN_IN" ? "Sign In" : "Sign Up";
 
@@ -79,7 +97,7 @@ export const AuthForm = <T extends FieldValues>({
             )}
           />
         ))}
-        
+
         <Button
           disabled={form.formState.isSubmitting}
           className="primary-gradient paragraph-medium min-h-12 w-full rounded-2 px-4 py-3 font-inter !text-light-900"
