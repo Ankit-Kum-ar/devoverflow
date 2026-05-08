@@ -7,9 +7,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
-const NavLinks = ({ isMobileNav = false }: { isMobileNav?: boolean }) => {
+const NavLinks = ({ isMobileNav = false, userId }: { isMobileNav?: boolean; userId?: string }) => {
   const pathname = usePathname();
-  const userId = "123"; // Replace with actual user ID retrieval logic
   return (
     <>
       {sidebarLinks.map((item) => {

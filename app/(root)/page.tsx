@@ -4,7 +4,6 @@ import ROUTES from "../constants/route";
 import LocalSearch from "@/components/search/LocalSearch";
 import HomeFilter from "@/components/filters/HomeFilter";
 import QuestionCard from "@/components/cards/QuestionCard";
-import { auth } from "@/auth";
 
 const questions = [
   {
@@ -57,8 +56,6 @@ interface SearchParams {
 }
 
 async function Home({ searchParams }: SearchParams) {
-  const session = await auth();
-  console.log("Session: ",session);
   const { query = "" } = await searchParams; // Await the resolution of the searchParams promise to access the query parameters from the URL. This allows the Home component to utilize the query parameters for functionalities such as filtering or searching questions based on user input.
 
   const filteredQuestions = questions.filter((question) =>
