@@ -13,11 +13,16 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { useRef } from "react";
+import { useRef, useTransition } from "react";
 import { MDXEditorMethods } from "@mdxeditor/editor";
 import dynamic from "next/dynamic";
 import z from "zod";
 import TagCard from "../cards/TagCard";
+import { createQuestion } from "@/lib/actions/question.action";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import ROUTES from "@/app/constants/route";
+import { Loader2 } from "lucide-react";
 
 // This is the only place InitializedMDXEditor is imported directly.
 const Editor = dynamic(() => import("@/components/editor"), {
@@ -34,6 +39,9 @@ const QuestionForm = () => {
       tags: [],
     },
   });
+
+  const router = useRouter();
+  const [isPending, startTransaction] = useTransition();
 
   const editorRef = useRef<MDXEditorMethods>(null);
 
@@ -65,19 +73,34 @@ const QuestionForm = () => {
   };
 
   const handleTagRemove = (tag: string, field: { value: string[] }) => {
-    form.setValue("tags", field.value.filter((t) => t !== tag)); // Remove the tag from the form state
+    form.setValue(
+      "tags",
+      field.value.filter((t) => t !== tag)
+    ); // Remove the tag from the form state
     form.clearErrors("tags"); // Clear any validation errors for tags
 
     const newValue = field.value.filter((t) => t !== tag);
     if (newValue.length === 0) {
       form.setError("tags", {
         type: "manual",
-        message: "Tags are required"
-      })
+        message: "Tags are required",
+      });
     }
-  }
+  };
 
-  const handleCreateQuestion = () => {};
+  const handleCreateQuestion = async (
+    data: z.infer<typeof AskQuestionSchema>
+  ) => {
+    startTransaction(async () => {
+      const result = await createQuestion(data);
+      if (result.success) {
+        toast.success("Question created successfully!");
+        router.push(ROUTES.QUESTIONS(result.data!._id));
+      } else {
+        toast.error(result.error?.message || "Failed to create question");
+      }
+    });
+  };
   return (
     <Form {...form}>
       <form
@@ -173,9 +196,17 @@ const QuestionForm = () => {
         <div className="mt-16 flex justify-end">
           <Button
             type="submit"
+            disabled={isPending}
             className="primary-gradient w-fit !text-light-900"
           >
-            Ask a Question
+            { isPending ? (
+              <>
+                <Loader2 className="animate-spin mr-2 size-4" />
+                <span>Submitting...</span>
+              </>
+            ) : (
+              <>Ask a Question</>
+            ) }
           </Button>
         </div>
       </form>

@@ -19,7 +19,7 @@ const UserAvatar = ({ id, name, image, className = "h-9 w-9" }: Props) => {
     .slice(0, 2);
   return (
     <Link href={ROUTES.PROFILE(id)}>
-      <Avata  r className={className}>
+      <Avatar className={className}>
         {image ? (
           <Image
             src={image}
