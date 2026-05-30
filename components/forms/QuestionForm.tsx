@@ -18,11 +18,12 @@ import { MDXEditorMethods } from "@mdxeditor/editor";
 import dynamic from "next/dynamic";
 import z from "zod";
 import TagCard from "../cards/TagCard";
-import { createQuestion } from "@/lib/actions/question.action";
+import { createQuestion, editQuestion } from "@/lib/actions/question.action";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import ROUTES from "@/app/constants/route";
 import { Loader2 } from "lucide-react";
+import { Question } from "@/types/global";
 
 // This is the only place InitializedMDXEditor is imported directly.
 const Editor = dynamic(() => import("@/components/editor"), {
@@ -30,13 +31,18 @@ const Editor = dynamic(() => import("@/components/editor"), {
   ssr: false,
 });
 
-const QuestionForm = () => {
+interface Params {
+  question?: Question;
+  isEdit?: boolean;
+}
+
+const QuestionForm = ({ question, isEdit = false }: Params) => {
   const form = useForm<z.infer<typeof AskQuestionSchema>>({
     resolver: zodResolver(AskQuestionSchema),
     defaultValues: {
-      title: "",
-      content: "",
-      tags: [],
+      title: question?.title || "",
+      content: question?.content || "",
+      tags: question?.tags.map((tag) => tag.name) || [],
     },
   });
 
@@ -92,6 +98,19 @@ const QuestionForm = () => {
     data: z.infer<typeof AskQuestionSchema>
   ) => {
     startTransaction(async () => {
+      if (isEdit && question) {
+        const result = await editQuestion({
+          questionId: question?._id,
+          ...data,
+        });
+        if (result.success) {
+          toast.success("Question updated successfully!");
+          router.push(ROUTES.QUESTIONS(result.data!._id));
+        } else {
+          toast.error(result.error?.message || "Failed to update question");
+        }
+        return;
+      }
       const result = await createQuestion(data);
       if (result.success) {
         toast.success("Question created successfully!");
@@ -199,14 +218,14 @@ const QuestionForm = () => {
             disabled={isPending}
             className="primary-gradient w-fit !text-light-900"
           >
-            { isPending ? (
+            {isPending ? (
               <>
                 <Loader2 className="animate-spin mr-2 size-4" />
                 <span>Submitting...</span>
               </>
             ) : (
-              <>Ask a Question</>
-            ) }
+              <>{isEdit ? "Edit Question" : "Ask a Question"}</>
+            )}
           </Button>
         </div>
       </form>
