@@ -15,7 +15,7 @@ const EditQuestion = async ({ params }: RouteParams) => {
   if (!success || !question) return notFound();
 
   if (question.author.toString() !== session.user?.id)
-    return redirect(ROUTES.QUESTIONS(id));
+    redirect(ROUTES.QUESTIONS(id));
 
   return (
     <main>

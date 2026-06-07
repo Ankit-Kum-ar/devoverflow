@@ -15,8 +15,8 @@ export const getDeviconClassName = (techName: string) => {
 };
 
 // Function that takes in a date and return a string specifies how long ago was it created. i.e. 5 seconds ago, or days or hours
-export const getTimeStamp = (date: Date | string): string => {
-  const parsedDate = new Date(date); // handles both Date objects and date strings
+export const getTimeStamp = (createdAt: Date | string): string => {
+  const parsedDate = new Date(createdAt); // handles both Date objects and date strings
   const seconds = Math.floor((new Date().getTime() - parsedDate.getTime()) / 1000);
 
   if (seconds < 60) return `${seconds} second${seconds !== 1 ? "s" : ""} ago`;
