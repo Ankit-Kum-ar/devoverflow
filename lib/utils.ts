@@ -1,4 +1,4 @@
-import { techMap } from "@/app/constants/TechMap";
+import { techDescriptionMap, techMap } from "@/app/constants/TechMap";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -14,10 +14,19 @@ export const getDeviconClassName = (techName: string) => {
     : "devicon-devicon-plain";
 };
 
+export const getTechDescription = (techName: string) => {
+  const normalizedTechName = techName.toLowerCase().replace(/[ .]/g, "");
+  return techDescriptionMap[normalizedTechName]
+    ? techDescriptionMap[normalizedTechName]
+    : `${techName} is a technology or tool widely used in software development. It may refer to a programming language, framework, library, or other software tool that developers use to build applications, websites, or other software solutions.`;
+};
+
 // Function that takes in a date and return a string specifies how long ago was it created. i.e. 5 seconds ago, or days or hours
 export const getTimeStamp = (createdAt: Date | string): string => {
   const parsedDate = new Date(createdAt); // handles both Date objects and date strings
-  const seconds = Math.floor((new Date().getTime() - parsedDate.getTime()) / 1000);
+  const seconds = Math.floor(
+    (new Date().getTime() - parsedDate.getTime()) / 1000
+  );
 
   if (seconds < 60) return `${seconds} second${seconds !== 1 ? "s" : ""} ago`;
 
