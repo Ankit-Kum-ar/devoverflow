@@ -29,3 +29,8 @@ interface EditQuestionParams extends CreateQuestionParams {
 interface GetQuestionParams {
   questionId: string;
 }
+
+// It extends PaginatedSearchParams but it Omits the filter property since we don't need it for fetching questions by tag
+interface GetTagQuestionParams extends Omit<PaginatedSearchParams, "filter"> {
+  tagId: string;
+}
