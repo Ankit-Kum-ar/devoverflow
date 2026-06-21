@@ -1,0 +1,34 @@
+sequenceDiagram
+    participant Client
+    participant Middleware
+    participant NextJs as Next.js Server
+    participant After as After Function
+    participant DB as Database
+    participant External as External Service
+
+    Client->>Middleware: 1. Send HTTP Request
+
+    Note over Middleware: 2. Process request<br/>(e.g., auth, logging)
+
+    Middleware->>NextJs: 3. Pass (modified) request
+
+    NextJs->>DB: 4. Fetch data (if needed)
+    DB-->>NextJs: 5. Return data
+
+    Note over NextJs: 6. Generate response
+
+    NextJs-->>Middleware: 7. Send response
+    Middleware-->>Client: 8. Forward response
+
+    Note over Client: 9. Client receives response
+
+    rect rgb(255, 248, 200)
+        Note over After: 10. 'after' function triggered
+
+        Note over After: 11. Access response details
+
+        After->>External: 12. Log analytics data
+        After->>DB: 13. Update request log
+
+        Note over After: 14. Perform cleanup tasks
+    end
