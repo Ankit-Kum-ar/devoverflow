@@ -48,3 +48,13 @@ export const getTimeStamp = (createdAt: Date | string): string => {
   const years = Math.floor(days / 365);
   return `${years} year${years !== 1 ? "s" : ""} ago`;
 };
+
+export const formatNumber = (number: number) => {
+  if (number >= 1000000) {
+    return (number / 1000000).toFixed(1) + "M";
+  } else if (number >= 1000) {
+    return (number / 1000).toFixed(1) + "K";
+  } else {
+    return number.toString();
+  }
+};
