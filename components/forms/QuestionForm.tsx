@@ -105,7 +105,7 @@ const QuestionForm = ({ question, isEdit = false }: Params) => {
         });
         if (result.success) {
           toast.success("Question updated successfully!");
-          router.push(ROUTES.QUESTIONS(result.data!._id));
+          router.push(ROUTES.QUESTIONS(result.data!._id.toString()));
         } else {
           toast.error(result.error?.message || "Failed to update question");
         }
@@ -114,7 +114,7 @@ const QuestionForm = ({ question, isEdit = false }: Params) => {
       const result = await createQuestion(data);
       if (result.success) {
         toast.success("Question created successfully!");
-        router.push(ROUTES.QUESTIONS(result.data!._id));
+        router.push(ROUTES.QUESTIONS(result.data!._id.toString()));
       } else {
         toast.error(result.error?.message || "Failed to create question");
       }
