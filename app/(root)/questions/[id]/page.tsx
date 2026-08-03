@@ -1,4 +1,5 @@
 import ROUTES from "@/app/constants/route";
+import AllAnswers from "@/components/answers/AllAnswers";
 import TagCard from "@/components/cards/TagCard";
 import Preview from "@/components/editor/Preview";
 import AnswerForm from "@/components/forms/AnswerForm";
@@ -98,6 +99,17 @@ const QuestionDetails = async ({ params }: RouteParams) => {
           />
         ))}
       </div>
+
+      <section className="my-5">
+        <AllAnswers 
+          data={answerResult?.answers || []}
+          success={areAnswersLoaded}
+          error={answerError}
+          // isNext={answerResult?.isNext || false}
+          totalAnswers={answerResult?.totalAnswers || 0}
+        />
+      </section>
+
       <section className="my-5">
         <AnswerForm questionId={question._id} />
       </section>
