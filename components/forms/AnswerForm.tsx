@@ -20,6 +20,8 @@ import { RefreshCw } from "lucide-react";
 import Image from "next/image";
 import { createAnswer } from "@/lib/actions/answer.action";
 import { toast } from "sonner";
+import { useSession } from "next-auth/react";
+import { api } from "@/lib/api";
 
 // This is the only place InitializedMDXEditor is imported directly.
 const Editor = dynamic(() => import("@/components/editor"), {
@@ -27,11 +29,21 @@ const Editor = dynamic(() => import("@/components/editor"), {
   ssr: false,
 });
 
-const AnswerForm = ({ questionId }: { questionId: string }) => {
+const AnswerForm = ({
+  questionId,
+  questionTitle,
+  questionContent,
+}: {
+  questionId: string;
+  questionTitle: string;
+  questionContent: string;
+}) => {
   const [isAnswering, startAnsweringTransition] = useTransition();
   const [isAISubmitting, setIsAISubmitting] = useState(false);
+  const [editorKey, setEditorKey] = useState(0);
+  const session = useSession();
 
-  const editorRef = useRef<MDXEditorMethods>(null);
+  const editorRef = useRef<MDXEditorMethods | null>(null);
 
   const form = useForm<z.infer<typeof AnswerSchema>>({
     resolver: zodResolver(AnswerSchema),
@@ -49,11 +61,55 @@ const AnswerForm = ({ questionId }: { questionId: string }) => {
 
       if (result.success) {
         form.reset();
+        setEditorKey((prev) => prev + 1);
         toast.success("Your answer has been posted successfully");
+
+        if (editorRef.current) {
+          editorRef.current.setMarkdown("");
+        }
       } else {
         toast.error(result.error?.message);
       }
     });
+  };
+
+  const generateAIAnswer = async () => {
+    if (session.status !== "authenticated") {
+      toast.error("You must be logged in to generate an AI answer.");
+      return;
+    }
+
+    setIsAISubmitting(true);
+
+    const userAnswer = editorRef.current?.getMarkdown() || "";
+
+    try {
+      const { success, data, error } = await api.ai.getAnswer(
+        questionTitle,
+        questionContent,
+        userAnswer
+      );
+
+      if (!success) {
+        toast.error(error?.message || "Failed to generate AI answer.");
+        return;
+      }
+
+      const formattedAnswer = String(data).replace(/<br>/g, " ").trim();
+
+      form.setValue("content", formattedAnswer, {
+        shouldValidate: true,
+        shouldDirty: true,
+      });
+      setEditorKey((prev) => prev + 1);
+
+      editorRef.current?.setMarkdown?.(formattedAnswer);
+      toast.success("AI answer generated successfully.");
+    } catch (error) {
+      toast.error("Failed to generate AI answer.");
+    } finally {
+      setIsAISubmitting(false);
+    }
   };
 
   return (
@@ -65,6 +121,7 @@ const AnswerForm = ({ questionId }: { questionId: string }) => {
         <Button
           className="btn light-border-2 gap-1.5 rounded-md border px-4 py-2.5 text-primary-500 shadow-none dark:text-primary-500"
           disabled={isAISubmitting}
+          onClick={generateAIAnswer}
         >
           {isAISubmitting ? (
             <>
@@ -97,6 +154,7 @@ const AnswerForm = ({ questionId }: { questionId: string }) => {
               <FormItem className="flex w-full flex-col gap-3">
                 <FormControl>
                   <Editor
+                    key={editorKey}
                     value={field.value}
                     editorRef={editorRef}
                     fieldChange={field.onChange}

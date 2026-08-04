@@ -1,5 +1,5 @@
 "use client";
-import type { ForwardedRef } from "react";
+import { ForwardedRef, useEffect } from "react";
 import {
   headingsPlugin,
   listsPlugin,
@@ -44,6 +44,12 @@ interface Props {
 const Editor = ({ editorRef, value, fieldChange, ...props }: Props) => {
   const { resolvedTheme } = useTheme();
   const theme = resolvedTheme === "dark" ? [basicDark] : [];
+
+  useEffect(() => {
+    if (!editorRef || !("current" in editorRef)) return;
+
+    editorRef.current?.setMarkdown?.(value);
+  }, [editorRef, value]);
 
   return (
     <MDXEditor
