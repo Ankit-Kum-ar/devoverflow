@@ -146,3 +146,27 @@ export const AIAnswerSchema = z.object({
     .min(100, "Content is required and should be at least 100 characters long"),
   userAnswer: z.string().optional(),
 });
+
+export const CreateVoteSchema = z.object({
+  targetId: z.string().min(1, "Target ID is required"),
+  targetType: z.enum(
+    ["question", "answer"],
+    "Target type must be either 'question' or 'answer'"
+  ),
+  voteType: z.enum(
+    ["upvote", "downvote"],
+    "Vote type must be either 'upvote' or 'downvote'"
+  ),
+});
+
+export const UpdateVoteCountSchema = CreateVoteSchema.extend({
+  change: z
+    .number()
+    .min(-1, "Change must be either 1 or -1")
+    .max(1, "Change must be either 1 or -1"),
+});
+
+export const HasVotedSchema = CreateVoteSchema.pick({
+  targetId: true,
+  targetType: true,
+});
