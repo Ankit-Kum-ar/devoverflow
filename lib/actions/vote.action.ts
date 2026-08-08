@@ -11,6 +11,8 @@ import {
 import handleError from "../handlers/error";
 import { Answer, Question, Vote } from "@/database";
 import { ClientSession } from "mongoose";
+import ROUTES from "@/app/constants/route";
+import { revalidatePath } from "next/cache";
 
 export async function updateVoteCount(
   params: UpdateVoteCountParams,
@@ -94,6 +96,12 @@ export async function createVote(
           targetId,
           targetType,
           voteType: existingVote.voteType,
+          change: -1,
+        });
+        await updateVoteCount({
+          targetId,
+          targetType,
+          voteType,
           change: 1,
         });
       }
@@ -115,6 +123,7 @@ export async function createVote(
 
     await session.commitTransaction();
     session.endSession();
+    revalidatePath(ROUTES.QUESTIONS(targetId));
     return { success: true };
   } catch (error) {
     await session.abortTransaction();
