@@ -18,9 +18,10 @@ import { Suspense } from "react";
 import SaveQuestion from "@/components/questions/SaveQuestion";
 import { hasSavedQuestion } from "@/lib/actions/collection.action";
 
-const QuestionDetails = async ({ params }: RouteParams) => {
+const QuestionDetails = async ({ params, searchParams }: RouteParams) => {
   const { id } = await params;
   const { success, data: question } = await getQuestion({ questionId: id });
+  const { page, pageSize, filter } = await searchParams;
 
   after(async () => {
     await incrementViews({ questionId: id });
@@ -33,9 +34,9 @@ const QuestionDetails = async ({ params }: RouteParams) => {
     error: answerError,
   } = await getAnswers({
     questionId: id,
-    page: 1,
-    pageSize: 5,
-    filter: "latest",
+    page: Number(page) || 1,
+    pageSize: Number(pageSize) || 10,
+    filter,
   });
 
   // console.log("Answer Result:", answerResult);

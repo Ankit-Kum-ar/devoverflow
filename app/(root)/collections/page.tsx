@@ -8,6 +8,8 @@ import DataRenderer from "@/components/DataRenderer";
 import { EMPTY_QUESTION } from "@/app/constants/states";
 import ROUTES from "@/app/constants/route";
 import { getSavedQuestions } from "@/lib/actions/collection.action";
+import CommonFilter from "@/components/filters/CommonFilter";
+import { CollectionsFilter } from "@/app/constants/filters";
 
 // This interface defines the expected structure of the search parameters that will be passed to the Home component. The searchParams property is a Promise that resolves to an object containing key-value pairs, where each key is a string representing the name of a query parameter and each value is a string representing the corresponding value of that parameter. This allows the Home component to access and utilize the search parameters from the URL for functionalities such as filtering or searching questions based on user input.
 interface SearchParams {
@@ -38,6 +40,11 @@ async function Collections({ searchParams }: SearchParams) {
           placeholder="Search questions..."
           otherClasses="flex-1"
           route={ROUTES.COLLECTION}
+        />
+
+        <CommonFilter
+          filters={CollectionsFilter}
+          otherClasses="min-h-[56px] sm:min-w-[170px]"
         />
       </div>
       <DataRenderer
