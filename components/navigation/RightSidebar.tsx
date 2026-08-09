@@ -4,9 +4,16 @@ import TagCard from "../cards/TagCard";
 import { getHotQuestions } from "@/lib/actions/question.action";
 import DataRenderer from "../DataRenderer";
 import ROUTES from "@/app/constants/route";
+import { getTopTags } from "@/lib/actions/tag.action";
+import { Tag } from "@/types/global";
 
 const RightSidebar = async () => {
   const { success, data: hotQuestions, error } = await getHotQuestions();
+  const {
+    success: tagSuccess,
+    data: tags,
+    error: tagError,
+  } = await getTopTags();
   return (
     <section className="pt-36 custom-scrollbar background-light900_dark200 light-border sticky right-0 top-0 flex h-screen w-[350px] flex-col gap-6 overflow-y-auto border-l p-6 shadow-light-300 dark:shadow-none max-xl:hidden">
       <div>
@@ -45,21 +52,32 @@ const RightSidebar = async () => {
           />
         </div>
       </div>
-      {/* <div className="mt-16 ">
+      <div className="mt-16 ">
         <h3 className="h3-bold text-dark200_light900">Popular Tags</h3>
-        <div className="mt-7 flex flex-col gap-4">
-          {popularTags.map(({ _id, name, questions }) => (
-            <TagCard
-              key={_id}
-              _id={_id}
-              name={name}
-              questions={questions}
-              showCount
-              compact
-            />
-          ))}
-        </div>
-      </div> */}
+        <DataRenderer
+          data={Array.isArray(tags) ? tags : undefined}
+          empty={{
+            title: "No tags Found",
+            message: "No tags has been created yet.",
+          }}
+          success={tagSuccess}
+          error={tagError}
+          render={(tags: Tag[]) => (
+            <div className="mt-7 flex flex-col gap-4">
+              {tags.map(({ _id, name, questions }) => (
+                <TagCard
+                  key={_id}
+                  _id={_id}
+                  name={name}
+                  questions={questions}
+                  showCount
+                  compact
+                />
+              ))}
+            </div>
+          )}
+        />
+      </div>
     </section>
   );
 };
