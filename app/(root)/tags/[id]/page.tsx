@@ -2,6 +2,7 @@ import ROUTES from "@/app/constants/route";
 import { EMPTY_QUESTION } from "@/app/constants/states";
 import QuestionCard from "@/components/cards/QuestionCard";
 import DataRenderer from "@/components/DataRenderer";
+import Pagination from "@/components/Pagination";
 import LocalSearch from "@/components/search/LocalSearch";
 import { getTagQuestions } from "@/lib/actions/tag.action";
 import { getTechDescription, cn, getDeviconClassName } from "@/lib/utils";
@@ -94,16 +95,7 @@ const TagDetail = async ({ params, searchParams }: RouteParams) => {
       />
 
       {/* Pagination Section */}
-      {isNext && (
-        <section className="mt-10 flex justify-center">
-          <a
-            href={`${ROUTES.TAG(tagId)}?page=${Number(page || 1) + 1}&pageSize=${pageSize || 10}${query ? `&query=${query}` : ""}`}
-            className="primary-gradient flex min-h-[46px] items-center justify-center rounded-lg px-8 py-3 text-light-900"
-          >
-            Load More
-          </a>
-        </section>
-      )}
+      <Pagination page={page} isNext={isNext || false} />
     </>
   );
 };

@@ -9,6 +9,7 @@ import DataRenderer from "@/components/DataRenderer";
 import { EMPTY_QUESTION } from "../constants/states";
 import CommonFilter from "@/components/filters/CommonFilter";
 import { HomePageFilters } from "../constants/filters";
+import Pagination from "@/components/Pagination";
 
 // This interface defines the expected structure of the search parameters that will be passed to the Home component. The searchParams property is a Promise that resolves to an object containing key-value pairs, where each key is a string representing the name of a query parameter and each value is a string representing the corresponding value of that parameter. This allows the Home component to access and utilize the search parameters from the URL for functionalities such as filtering or searching questions based on user input.
 interface SearchParams {
@@ -27,7 +28,7 @@ async function Home({ searchParams }: SearchParams) {
     filter: filter || "",
   });
 
-  const { questions } = data || {};
+  const { questions, isNext } = data || {};
 
   return (
     <>
@@ -69,6 +70,8 @@ async function Home({ searchParams }: SearchParams) {
           </div>
         )}
       />
+
+      <Pagination page={page} isNext={isNext || false} />
     </>
   );
 }

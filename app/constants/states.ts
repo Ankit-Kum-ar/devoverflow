@@ -41,10 +41,6 @@ export const EMPTY_TAGS = {
 export const EMPTY_ANSWERS = {
   title: "No Answers Found",
   message: "The answer board is empty. Be the first to share your knowledge!",
-  button: {
-    text: "Answers",
-    href: ROUTES.HOME,
-  },
 };
 
 export const EMPTY_COLLECTIONS = {

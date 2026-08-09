@@ -4,6 +4,7 @@ import { EMPTY_USERS } from "@/app/constants/states";
 import UserCard from "@/components/cards/UserCard";
 import DataRenderer from "@/components/DataRenderer";
 import CommonFilter from "@/components/filters/CommonFilter";
+import Pagination from "@/components/Pagination";
 import LocalSearch from "@/components/search/LocalSearch";
 import { getUsers } from "@/lib/actions/user.action";
 import { RouteParams } from "@/types/global";
@@ -18,7 +19,7 @@ const Community = async ({ searchParams }: RouteParams) => {
     filter,
   });
 
-  const { users } = data || {};
+  const { users, isNext } = data || {};
   return (
     <div>
       <h1 className="h1-bold text-dark100_light900">All Users</h1>
@@ -50,6 +51,7 @@ const Community = async ({ searchParams }: RouteParams) => {
           </div>
         )}
       />
+      <Pagination page={page} isNext={isNext || false} />
     </div>
   );
 };
