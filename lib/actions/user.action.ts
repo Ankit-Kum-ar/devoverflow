@@ -2,18 +2,29 @@
 
 import {
   ActionResponse,
+  Answer as AnswerType,
   ErrorResponse,
   PaginatedSearchParams,
   Question as QuestionType,
   User as UserType,
 } from "@/types/global";
 import action from "../handlers/action";
-import { GetUserSchema, PaginatedSearchSchema } from "../validations";
+import {
+  GetUserQuestionsSchema,
+  GetUsersAnswersSchema,
+  GetUserSchema,
+  PaginatedSearchSchema,
+} from "../validations";
 import handleError from "../handlers/error";
 import type { Filter } from "mongodb";
 import { Answer, Question, User } from "@/database";
-import { GetUserParams, GetUserQuestionsParams } from "@/types/action";
+import {
+  GetUserAnswersParams,
+  GetUserParams,
+  GetUserQuestionsParams,
+} from "@/types/action";
 import { stringify } from "querystring";
+import { success } from "zod";
 
 export async function getUsers(
   params: PaginatedSearchParams
@@ -123,7 +134,7 @@ export async function getUserQuestions(params: GetUserQuestionsParams): Promise<
 > {
   const validationResult = await action({
     params,
-    schema: GetUserSchema,
+    schema: GetUserQuestionsSchema,
   });
   if (validationResult instanceof Error) {
     return handleError(validationResult) as ErrorResponse;
@@ -147,6 +158,45 @@ export async function getUserQuestions(params: GetUserQuestionsParams): Promise<
       success: true,
       data: {
         questions: JSON.parse(JSON.stringify(questions)),
+        isNext,
+      },
+    };
+  } catch (error) {
+    return handleError(error) as ErrorResponse;
+  }
+}
+
+export async function getUserAnswers(params: GetUserAnswersParams): Promise<
+  ActionResponse<{
+    answers: AnswerType[];
+    isNext: boolean;
+  }>
+> {
+  const validationResult = await action({
+    params,
+    schema: GetUsersAnswersSchema,
+  });
+  if (validationResult instanceof Error) {
+    return handleError(validationResult) as ErrorResponse;
+  }
+
+  const { userId, page = 1, pageSize = 10 } = params;
+  const skip = (Number(page) - 1) * pageSize;
+  const limit = pageSize;
+  try {
+    const totalAnswers = await Answer.countDocuments({ author: userId });
+
+    const answers = await Answer.find({ author: userId })
+      .populate("author", "_id name image")
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    const isNext = totalAnswers > skip + answers.length;
+    return {
+      success: true,
+      data: {
+        answers: JSON.parse(JSON.stringify(answers)),
         isNext,
       },
     };
