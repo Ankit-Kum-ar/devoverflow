@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { deleteQuestion } from "@/lib/actions/question.action";
 
 interface Props {
   type: string;
@@ -23,18 +24,21 @@ interface Props {
 const EditDeleteAction = ({ type, itemId }: Props) => {
   const router = useRouter();
   const handleEdit = async () => {
-    router.push(`/questions/${itemId}/edit`)
+    router.push(`/questions/${itemId}/edit`);
   };
   const handleDelete = async () => {
     if (type === "Question") {
       // Call API to delete question...
+      await deleteQuestion({ questionId: itemId });
       toast.success("Question deleted successfully");
     } else if (type === "Answer") {
       toast.success("Answer deleted successfully");
     }
   };
   return (
-    <div className={`flex items-center justify-end gap-3 max-sm:w-full ${type === "Answer" && "gap-0 justify-center"}`}>
+    <div
+      className={`flex items-center justify-end gap-3 max-sm:w-full ${type === "Answer" && "gap-0 justify-center"}`}
+    >
       {type === "Question" && (
         <Image
           src={"/icons/edit.svg"}
