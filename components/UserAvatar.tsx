@@ -1,8 +1,10 @@
-import ROUTES from "@/app/constants/route";
-import Link from "next/link";
-import { Avatar, AvatarFallback } from "./ui/avatar";
 import Image from "next/image";
+import Link from "next/link";
+
+import ROUTES from "@/app/constants/route";
 import { cn } from "@/lib/utils";
+
+import { Avatar, AvatarFallback } from "./ui/avatar";
 
 interface Props {
   id: string;
@@ -12,7 +14,13 @@ interface Props {
   fallbackClassName?: string;
 }
 
-const UserAvatar = ({ id, name, image, className = "h-9 w-9", fallbackClassName }: Props) => {
+const UserAvatar = ({
+  id,
+  name,
+  image,
+  className = "h-9 w-9",
+  fallbackClassName,
+}: Props) => {
   const initials = name
     .split(" ")
     .map((word: string) => word[0])
@@ -30,7 +38,12 @@ const UserAvatar = ({ id, name, image, className = "h-9 w-9", fallbackClassName 
             fill
           />
         ) : (
-          <AvatarFallback className={cn("primary-vairant font-space-grotesk font-bold tracking-wider text-white", fallbackClassName)}>
+          <AvatarFallback
+            className={cn(
+              "primary-vairant font-space-grotesk font-bold tracking-wider text-white",
+              fallbackClassName
+            )}
+          >
             {initials}
           </AvatarFallback>
         )}

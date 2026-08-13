@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk as SpaceGrotesk } from "next/font/google";
-
+// @ts-expect-error: side-effect CSS import - declaration file not present in this repo
 import "./globals.css";
-import ThemeProvider from "@/context/Theme";
-import { Toaster } from "@/components/ui/sonner";
 import { SessionProvider } from "next-auth/react";
+
 import { auth } from "@/auth";
+import { Toaster } from "@/components/ui/sonner";
+import ThemeProvider from "@/context/Theme";
 
 const inter = Inter({
   variable: "--font-inter",

@@ -1,9 +1,11 @@
 "use client";
-import { cn } from "@/lib/utils";
-import React from "react";
-import { Button } from "./ui/button";
-import { formUrlQuery } from "@/lib/url";
 import { useRouter, useSearchParams } from "next/navigation";
+import React from "react";
+
+import { formUrlQuery } from "@/lib/url";
+import { cn } from "@/lib/utils";
+
+import { Button } from "./ui/button";
 
 interface Props {
   page: number | undefined | string;
@@ -24,7 +26,7 @@ const Pagination = ({ page = 1, isNext, containerClasses }: Props) => {
       key: "page",
       value: nextPageNumber.toString(),
     });
-    router.push(newUrl)
+    router.push(newUrl);
   };
   return (
     <div

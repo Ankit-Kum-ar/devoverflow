@@ -1,9 +1,11 @@
+import Link from "next/link";
+
 import ROUTES from "@/app/constants/route";
 import { getTimeStamp } from "@/lib/utils";
-import Link from "next/link";
+import { Question, Tag } from "@/types/global";
+
 import TagCard from "./TagCard";
 import Metric from "../Metric";
-import { Question, Tag } from "@/types/global";
 import EditDeleteAction from "../user/EditDeleteAction";
 
 interface Props {

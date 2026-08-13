@@ -1,15 +1,18 @@
 "use server";
 
-import { ActionResponse, ErrorResponse } from "@/types/global";
-import action from "../handlers/action";
-import { SignInSchema, SignUpSchema } from "../validations";
-import handleError from "../handlers/error";
-import mongoose from "mongoose";
-import User from "@/database/user.model";
 import bcrypt from "bcryptjs";
-import Account from "@/database/account.model";
+import mongoose from "mongoose";
+
 import { signIn } from "@/auth";
+import Account from "@/database/account.model";
+import User from "@/database/user.model";
+import { AuthCredentials } from "@/types/action";
+import { ActionResponse, ErrorResponse } from "@/types/global";
+
+import action from "../handlers/action";
+import handleError from "../handlers/error";
 import { NotFoundError } from "../http-errors";
+import { SignInSchema, SignUpSchema } from "../validations";
 
 export async function signUpWithCredentials(
   params: AuthCredentials
@@ -83,7 +86,6 @@ export async function signUpWithCredentials(
       redirect: false, // We set redirect to false because we don't want to redirect the user after signing in, we just want to create a session for the user.
     });
 
-
     // 12. Finally, we return a success response to the client.
     return {
       success: true,
@@ -145,7 +147,6 @@ export async function signInWithCredentials(
       password,
       redirect: false, // We set redirect to false because we don't want to redirect the user after signing in, we just want to create a session for the user.
     });
-
 
     // 12. Finally, we return a success response to the client.
     return {

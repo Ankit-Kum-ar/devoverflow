@@ -1,18 +1,21 @@
 "use server";
 
+import mongoose from "mongoose";
+import { revalidatePath } from "next/cache";
+
+import ROUTES from "@/app/constants/route";
+import { Question } from "@/database";
 import Answer, { IAnswerDoc } from "@/database/answer.model";
+import { CreateAnswerParams, GetAnswerParams } from "@/types/action";
 import {
   ActionResponse,
   Answer as Answers,
   ErrorResponse,
 } from "@/types/global";
+
 import action from "../handlers/action";
-import { AnswerServerSchema, GetAnswerSchema } from "../validations";
 import handleError from "../handlers/error";
-import mongoose from "mongoose";
-import { Question } from "@/database";
-import { revalidatePath } from "next/cache";
-import ROUTES from "@/app/constants/route";
+import { AnswerServerSchema, GetAnswerSchema } from "../validations";
 
 export async function createAnswer(
   params: CreateAnswerParams

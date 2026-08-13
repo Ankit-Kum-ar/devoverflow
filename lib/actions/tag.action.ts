@@ -1,3 +1,7 @@
+import { Filter } from "mongodb";
+
+import { Question, Tag } from "@/database";
+import { GetTagQuestionParams } from "@/types/action";
 import {
   ActionResponse,
   ErrorResponse,
@@ -5,12 +9,11 @@ import {
   Question as QuestionType,
   Tag as TagType,
 } from "@/types/global";
+
 import action from "../handlers/action";
-import { GetTagQuestionSchema, PaginatedSearchSchema } from "../validations";
 import handleError from "../handlers/error";
-import { Filter } from "mongodb";
-import { Question, Tag } from "@/database";
 import dbConnect from "../mongoose";
+import { GetTagQuestionSchema, PaginatedSearchSchema } from "../validations";
 
 export const getTags = async (
   params: PaginatedSearchParams

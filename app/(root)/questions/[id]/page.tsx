@@ -1,22 +1,24 @@
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import { after } from "next/server";
+import { Suspense } from "react";
+
 import ROUTES from "@/app/constants/route";
 import AllAnswers from "@/components/answers/AllAnswers";
 import TagCard from "@/components/cards/TagCard";
 import Preview from "@/components/editor/Preview";
 import AnswerForm from "@/components/forms/AnswerForm";
 import Metric from "@/components/Metric";
+import SaveQuestion from "@/components/questions/SaveQuestion";
 import UserAvatar from "@/components/UserAvatar";
 import { getAnswers } from "@/lib/actions/answer.action";
+import { hasSavedQuestion } from "@/lib/actions/collection.action";
 import { getQuestion, incrementViews } from "@/lib/actions/question.action";
+import { hasVoted } from "@/lib/actions/vote.action";
 import { formatNumber, getTimeStamp } from "@/lib/utils";
 import { RouteParams, Tag } from "@/types/global";
-import Link from "next/link";
-import { redirect } from "next/navigation";
-import { after } from "next/server";
+
 import Votes from "../../../../components/votes/Votes";
-import { hasVoted } from "@/lib/actions/vote.action";
-import { Suspense } from "react";
-import SaveQuestion from "@/components/questions/SaveQuestion";
-import { hasSavedQuestion } from "@/lib/actions/collection.action";
 
 const QuestionDetails = async ({ params, searchParams }: RouteParams) => {
   const { id } = await params;

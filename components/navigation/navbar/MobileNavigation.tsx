@@ -1,4 +1,9 @@
+import { LogOut } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+
 import ROUTES from "@/app/constants/route";
+import { auth, signOut } from "@/auth";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -7,11 +12,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import Image from "next/image";
-import Link from "next/link";
+
 import NavLinks from "./NavLinks";
-import { auth, signOut } from "@/auth";
-import { LogOut } from "lucide-react";
 
 const MobileNavigation = async () => {
   const session = await auth();
@@ -66,9 +68,7 @@ const MobileNavigation = async () => {
                     className="base-medium w-fit !bg-transparent px-4 py-3"
                   >
                     <LogOut className="size-5 text-black dark:text-white" />
-                    <span className="text-dark300_light900">
-                      Logout
-                    </span>
+                    <span className="text-dark300_light900">Logout</span>
                   </Button>
                 </form>
               </SheetClose>

@@ -1,6 +1,9 @@
 "use client";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
+import { toast } from "sonner";
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -12,8 +15,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 import { deleteQuestion } from "@/lib/actions/question.action";
 
 interface Props {

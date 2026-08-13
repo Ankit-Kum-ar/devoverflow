@@ -1,5 +1,22 @@
+import dayjs from "dayjs";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+
+import {
+  EMPTY_ANSWERS,
+  EMPTY_QUESTION,
+  EMPTY_TAGS,
+} from "@/app/constants/states";
 import { auth } from "@/auth";
+import AnswerCard from "@/components/cards/AnswerCard";
+import QuestionCard from "@/components/cards/QuestionCard";
+import TagCard from "@/components/cards/TagCard";
+import DataRenderer from "@/components/DataRenderer";
+import Pagination from "@/components/Pagination";
+import { Button } from "@/components/ui/button";
+import { TabsList, TabsTrigger, TabsContent, Tabs } from "@/components/ui/tabs";
 import ProfileLink from "@/components/user/ProfileLink";
+import Stats from "@/components/user/Stats";
 import UserAvatar from "@/components/UserAvatar";
 import {
   getUser,
@@ -8,22 +25,6 @@ import {
   getUserTopTags,
 } from "@/lib/actions/user.action";
 import { RouteParams } from "@/types/global";
-import { notFound } from "next/navigation";
-import dayjs from "dayjs";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import Stats from "@/components/user/Stats";
-import { TabsList, TabsTrigger, TabsContent, Tabs } from "@/components/ui/tabs";
-import DataRenderer from "@/components/DataRenderer";
-import {
-  EMPTY_ANSWERS,
-  EMPTY_QUESTION,
-  EMPTY_TAGS,
-} from "@/app/constants/states";
-import QuestionCard from "@/components/cards/QuestionCard";
-import Pagination from "@/components/Pagination";
-import AnswerCard from "@/components/cards/AnswerCard";
-import TagCard from "@/components/cards/TagCard";
 
 const Profile = async ({ params, searchParams }: RouteParams) => {
   const { id } = await params;
@@ -82,11 +83,10 @@ const Profile = async ({ params, searchParams }: RouteParams) => {
     _id,
     image,
     portfolio,
-    email,
     bio,
     username,
     location,
-    reputation,
+    // reputation,
     createdAt,
   } = user;
   return (

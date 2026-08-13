@@ -1,5 +1,4 @@
 "use client";
-import { ForwardedRef, useEffect } from "react";
 import {
   headingsPlugin,
   listsPlugin,
@@ -32,7 +31,9 @@ import { basicDark } from "cm6-theme-basic-dark";
 // @ts-expect-error CSS module import from package
 import "@mdxeditor/editor/style.css";
 import { useTheme } from "next-themes";
-// @ts-ignore
+import { ForwardedRef, useEffect } from "react";
+
+// @ts-expect-error CSS import from local file
 import "./dark-editor.css";
 
 interface Props {

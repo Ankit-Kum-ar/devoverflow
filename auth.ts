@@ -1,13 +1,14 @@
+import bcrypt from "bcryptjs";
 import NextAuth from "next-auth";
+import Credentials from "next-auth/providers/credentials";
 import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
-import { api } from "./lib/api";
-import { ActionResponse } from "./types/global";
+
 import { IAccountDoc } from "./database/account.model";
-import { SignInSchema } from "./lib/validations";
-import Credentials from "next-auth/providers/credentials";
-import bcrypt from "bcryptjs";
 import { IUserDoc } from "./database/user.model";
+import { api } from "./lib/api";
+import { SignInSchema } from "./lib/validations";
+import { ActionResponse } from "./types/global";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [

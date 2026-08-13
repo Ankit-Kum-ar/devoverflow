@@ -1,8 +1,10 @@
-import { User } from "@/types/global";
-import React from "react";
-import UserAvatar from "../UserAvatar";
 import Link from "next/link";
+import React from "react";
+
 import ROUTES from "@/app/constants/route";
+import { User } from "@/types/global";
+
+import UserAvatar from "../UserAvatar";
 
 const UserCard = ({ _id, name, image, username }: User) => {
   return (
@@ -16,10 +18,14 @@ const UserCard = ({ _id, name, image, username }: User) => {
           fallbackClassName="text-3xl tracking-widest"
         />
         <Link href={ROUTES.PROFILE(_id)}>
-            <div className="mt-4 text-center">
-                <h3 className="h3-bold text-dark200_light900 line-clamp-1">{name}</h3>
-                <p className="body-regular text-dark500_light500 mt-2 ">{username}</p>
-            </div>
+          <div className="mt-4 text-center">
+            <h3 className="h3-bold text-dark200_light900 line-clamp-1">
+              {name}
+            </h3>
+            <p className="body-regular text-dark500_light500 mt-2 ">
+              {username}
+            </p>
+          </div>
         </Link>
       </article>
     </div>

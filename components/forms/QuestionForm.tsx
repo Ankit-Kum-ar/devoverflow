@@ -1,7 +1,21 @@
 "use client";
-import { AskQuestionSchema } from "@/lib/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { MDXEditorMethods } from "@mdxeditor/editor";
+import { Loader2 } from "lucide-react";
+import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
+import { useRef, useTransition } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import z from "zod";
+
+import ROUTES from "@/app/constants/route";
+import { createQuestion, editQuestion } from "@/lib/actions/question.action";
+import { AskQuestionSchema } from "@/lib/validations";
+import { Question } from "@/types/global";
+
+import TagCard from "../cards/TagCard";
+import { Button } from "../ui/button";
 import {
   Form,
   FormControl,
@@ -12,18 +26,6 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { useRef, useTransition } from "react";
-import { MDXEditorMethods } from "@mdxeditor/editor";
-import dynamic from "next/dynamic";
-import z from "zod";
-import TagCard from "../cards/TagCard";
-import { createQuestion, editQuestion } from "@/lib/actions/question.action";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
-import ROUTES from "@/app/constants/route";
-import { Loader2 } from "lucide-react";
-import { Question } from "@/types/global";
 
 // This is the only place InitializedMDXEditor is imported directly.
 const Editor = dynamic(() => import("@/components/editor"), {
@@ -141,7 +143,7 @@ const QuestionForm = ({ question, isEdit = false }: Params) => {
                 />
               </FormControl>
               <FormDescription className="body-regular text-light-500 mt-2.5">
-                Be specific and imagine you're asking a question to another
+                Be specific and imagine you are asking a question to another
                 person.
               </FormDescription>
               <FormMessage />
@@ -165,7 +167,7 @@ const QuestionForm = ({ question, isEdit = false }: Params) => {
                 />
               </FormControl>
               <FormDescription className="body-regular text-light-500 mt-2.5">
-                Introduce your problem and expand on what you've put in the
+                Introduce your problem and expand on what you have put in the
                 title.
               </FormDescription>
               <FormMessage />

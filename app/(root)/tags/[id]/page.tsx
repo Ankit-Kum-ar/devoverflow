@@ -1,3 +1,5 @@
+import { redirect } from "next/navigation";
+
 import ROUTES from "@/app/constants/route";
 import { EMPTY_QUESTION } from "@/app/constants/states";
 import QuestionCard from "@/components/cards/QuestionCard";
@@ -7,7 +9,6 @@ import LocalSearch from "@/components/search/LocalSearch";
 import { getTagQuestions } from "@/lib/actions/tag.action";
 import { getTechDescription, cn, getDeviconClassName } from "@/lib/utils";
 import { RouteParams } from "@/types/global";
-import { redirect } from "next/navigation";
 
 const TagDetail = async ({ params, searchParams }: RouteParams) => {
   // Resolve dynamic params and search params
@@ -88,7 +89,11 @@ const TagDetail = async ({ params, searchParams }: RouteParams) => {
         render={(questions) => (
           <div className="mt-10 flex w-full flex-col gap-6">
             {questions.map((question) => (
-              <QuestionCard key={question._id} question={question} />
+              <QuestionCard
+                key={question._id}
+                question={question}
+                showActionBtns
+              />
             ))}
           </div>
         )}

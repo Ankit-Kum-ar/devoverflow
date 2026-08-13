@@ -1,10 +1,10 @@
-import { ActionResponse, Answer } from "@/types/global";
-import DataRenderer from "../DataRenderer";
-import AnswerCard from "../cards/AnswerCard";
-import { EMPTY_ANSWERS } from "@/app/constants/states";
-import CommonFilter from "../filters/CommonFilter";
 import { AnswersFilter } from "@/app/constants/filters";
-import page from "@/app/(root)/page";
+import { EMPTY_ANSWERS } from "@/app/constants/states";
+import { ActionResponse, Answer } from "@/types/global";
+
+import AnswerCard from "../cards/AnswerCard";
+import DataRenderer from "../DataRenderer";
+import CommonFilter from "../filters/CommonFilter";
 import Pagination from "../Pagination";
 
 interface Props extends ActionResponse<Answer[]> {

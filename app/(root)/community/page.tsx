@@ -1,3 +1,5 @@
+import React from "react";
+
 import { UserFilters } from "@/app/constants/filters";
 import ROUTES from "@/app/constants/route";
 import { EMPTY_USERS } from "@/app/constants/states";
@@ -8,7 +10,6 @@ import Pagination from "@/components/Pagination";
 import LocalSearch from "@/components/search/LocalSearch";
 import { getUsers } from "@/lib/actions/user.action";
 import { RouteParams } from "@/types/global";
-import React from "react";
 
 const Community = async ({ searchParams }: RouteParams) => {
   const { page, pageSize, query, filter } = await searchParams;

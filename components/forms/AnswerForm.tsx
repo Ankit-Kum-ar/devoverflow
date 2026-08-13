@@ -1,7 +1,14 @@
 "use client";
 
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { MDXEditorMethods } from "@mdxeditor/editor";
+import { RefreshCw } from "lucide-react";
+import dynamic from "next/dynamic";
+import Image from "next/image";
+import { useSession } from "next-auth/react";
+import { useRef, useState, useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -12,16 +19,9 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { useRef, useState, useTransition } from "react";
-import { AnswerSchema } from "@/lib/validations";
-import dynamic from "next/dynamic";
-import { MDXEditorMethods } from "@mdxeditor/editor";
-import { RefreshCw } from "lucide-react";
-import Image from "next/image";
 import { createAnswer } from "@/lib/actions/answer.action";
-import { toast } from "sonner";
-import { useSession } from "next-auth/react";
 import { api } from "@/lib/api";
+import { AnswerSchema } from "@/lib/validations";
 
 // This is the only place InitializedMDXEditor is imported directly.
 const Editor = dynamic(() => import("@/components/editor"), {
@@ -105,7 +105,7 @@ const AnswerForm = ({
 
       editorRef.current?.setMarkdown?.(formattedAnswer);
       toast.success("AI answer generated successfully.");
-    } catch (error) {
+    } catch {
       toast.error("Failed to generate AI answer.");
     } finally {
       setIsAISubmitting(false);

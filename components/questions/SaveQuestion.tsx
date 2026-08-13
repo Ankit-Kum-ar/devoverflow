@@ -1,10 +1,11 @@
 "use client";
-import { toggleSaveQuestion } from "@/lib/actions/collection.action";
-import { ActionResponse } from "@/types/global";
-import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 import React, { use, useState } from "react";
 import { toast } from "sonner";
+
+import { toggleSaveQuestion } from "@/lib/actions/collection.action";
+import { ActionResponse } from "@/types/global";
 
 const SaveQuestion = ({
   questionId,

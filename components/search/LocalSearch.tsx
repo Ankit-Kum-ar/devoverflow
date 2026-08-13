@@ -1,9 +1,11 @@
 "use client";
 import Image from "next/image";
-import { Input } from "../ui/input";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+
 import { formUrlQuery, removeKeyFromQuery } from "@/lib/url";
+
+import { Input } from "../ui/input";
 
 interface props {
   route: string;
@@ -52,7 +54,7 @@ const LocalSearch = ({
       }
     }, 300);
     return () => clearTimeout(delayDebounceFn); // Clear the timeout if the component unmounts or if the searchQuery changes before the timeout completes. This prevents multiple rapid updates to the URL as the user types, improving performance and reducing unnecessary URL changes.
-  }, [searchQuery, router, route, searchParams]);
+  }, [searchQuery, router, route, searchParams, pathname]);
   return (
     <div
       className={`background-light800_darkgradient flex min-h-[56px] grow items-center gap-4 rounded-[10px] px-4 ${otherClasses}`}

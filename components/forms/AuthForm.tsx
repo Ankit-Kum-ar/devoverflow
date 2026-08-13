@@ -1,5 +1,8 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   DefaultValues,
   FieldValues,
@@ -8,9 +11,10 @@ import {
   SubmitHandler,
   useForm,
 } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
 import { z } from "zod";
 
+import ROUTES from "@/app/constants/route";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -21,11 +25,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import Link from "next/link";
 import { ActionResponse } from "@/types/global";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
-import ROUTES from "@/app/constants/route";
 
 interface AuthFormProps<T extends FieldValues> {
   schema: z.ZodType<T>;
@@ -44,7 +44,7 @@ export const AuthForm = <T extends FieldValues>({
 
   const form = useForm<T>({
     resolver: zodResolver(
-      // @ts-ignore
+      // @ts-expect-error - zodResolver expects a Zod schema, but the generic type is narrowed here
       schema as unknown as z.ZodType<T>
     ) as unknown as Resolver<T>,
     defaultValues: defaultValues as DefaultValues<T>,
@@ -107,7 +107,7 @@ export const AuthForm = <T extends FieldValues>({
 
         {formType === "SIGN_IN" ? (
           <p className="paragraph-regular text-center text-dark400_light700">
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link
               href="/sign-up"
               className="font-medium text-primary-500 hover:underline"

@@ -1,13 +1,20 @@
 "use client";
-import { sidebarLinks } from "@/app/constants";
-import { SheetClose } from "@/components/ui/sheet";
-import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
-const NavLinks = ({ isMobileNav = false, userId }: { isMobileNav?: boolean; userId?: string }) => {
+import { sidebarLinks } from "@/app/constants";
+import { SheetClose } from "@/components/ui/sheet";
+import { cn } from "@/lib/utils";
+
+const NavLinks = ({
+  isMobileNav = false,
+  userId,
+}: {
+  isMobileNav?: boolean;
+  userId?: string;
+}) => {
   const pathname = usePathname();
   return (
     <>

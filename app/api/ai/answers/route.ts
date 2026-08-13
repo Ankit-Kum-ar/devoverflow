@@ -1,9 +1,10 @@
-import handleError from "@/lib/handlers/error";
-import { AIAnswerSchema } from "@/lib/validations";
-import { APIErrorResponse } from "@/types/global";
 import { google } from "@ai-sdk/google";
 import { generateText } from "ai";
 import { NextResponse } from "next/server";
+
+import handleError from "@/lib/handlers/error";
+import { AIAnswerSchema } from "@/lib/validations";
+import { APIErrorResponse } from "@/types/global";
 
 export async function POST(req: Request) {
   const { question, content, userAnswer } = await req.json();
