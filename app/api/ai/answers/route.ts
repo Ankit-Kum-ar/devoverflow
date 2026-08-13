@@ -4,9 +4,8 @@ import { NextResponse } from "next/server";
 
 import handleError from "@/lib/handlers/error";
 import { AIAnswerSchema } from "@/lib/validations";
-import { APIErrorResponse } from "@/types/global";
 
-export async function POST(req: Request) {
+export async function POST(req: Request): Promise<Response> {
   const { question, content, userAnswer } = await req.json();
 
   try {
@@ -14,8 +13,9 @@ export async function POST(req: Request) {
       question,
       content,
     });
+
     if (!validatedData.success) {
-      return handleError(validatedData.error, "api");
+      return handleError(validatedData.error, "api") as Response;
     }
 
     const { text } = await generateText({
@@ -42,6 +42,6 @@ Provide the final answer in markdown format.`,
       { status: 200 }
     );
   } catch (error) {
-    return handleError(error, "api") as APIErrorResponse;
+    return handleError(error, "api") as Response;
   }
 }
