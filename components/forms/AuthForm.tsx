@@ -7,7 +7,6 @@ import {
   DefaultValues,
   FieldValues,
   Path,
-  Resolver,
   SubmitHandler,
   useForm,
 } from "react-hook-form";
@@ -28,7 +27,7 @@ import ROUTES from "@/constants/route";
 import { ActionResponse } from "@/types/global";
 
 interface AuthFormProps<T extends FieldValues> {
-  schema: z.ZodType<T>;
+  schema: z.ZodType<T, T>;
   defaultValues: T;
   formType: "SIGN_IN" | "SIGN_UP";
   onSubmit: (data: T) => Promise<ActionResponse>;
@@ -43,12 +42,9 @@ export const AuthForm = <T extends FieldValues>({
   const router = useRouter();
 
   const form = useForm<T>({
-    resolver: zodResolver(
-      // @ts-expect-error - zodResolver expects a Zod schema, but the generic type is narrowed here
-      schema as unknown as z.ZodType<T>
-    ) as unknown as Resolver<T>,
-    defaultValues: defaultValues as DefaultValues<T>,
-  });
+  resolver: zodResolver(schema),
+  defaultValues: defaultValues as DefaultValues<T>,
+});
 
   const handleSubmit: SubmitHandler<T> = async (data) => {
     const result = (await onSubmit(data)) as ActionResponse;

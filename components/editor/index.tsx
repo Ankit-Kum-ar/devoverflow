@@ -28,12 +28,10 @@ import {
   diffSourcePlugin,
 } from "@mdxeditor/editor";
 import { basicDark } from "cm6-theme-basic-dark";
-// @ts-expect-error CSS module import from package
 import "@mdxeditor/editor/style.css";
 import { useTheme } from "next-themes";
 import { ForwardedRef, useEffect } from "react";
 
-// @ts-expect-error CSS import from local file
 import "./dark-editor.css";
 
 interface Props {
