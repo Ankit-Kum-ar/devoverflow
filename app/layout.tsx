@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk as SpaceGrotesk } from "next/font/google";
-// @ts-expect-error: side-effect CSS import - declaration file not present in this repo
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 
