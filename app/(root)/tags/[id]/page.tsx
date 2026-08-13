@@ -1,11 +1,11 @@
 import { redirect } from "next/navigation";
 
-import ROUTES from "@/app/constants/route";
 import { EMPTY_QUESTION } from "@/app/constants/states";
 import QuestionCard from "@/components/cards/QuestionCard";
 import DataRenderer from "@/components/DataRenderer";
 import Pagination from "@/components/Pagination";
 import LocalSearch from "@/components/search/LocalSearch";
+import ROUTES from "@/constants/route";
 import { getTagQuestions } from "@/lib/actions/tag.action";
 import { getTechDescription, cn, getDeviconClassName } from "@/lib/utils";
 import { RouteParams } from "@/types/global";

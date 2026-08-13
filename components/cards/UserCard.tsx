@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-import ROUTES from "@/app/constants/route";
+import ROUTES from "@/constants/route";
 import { User } from "@/types/global";
 
 import UserAvatar from "../UserAvatar";

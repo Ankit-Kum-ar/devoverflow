@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import ROUTES from "@/app/constants/route";
+import ROUTES from "@/constants/route";
 import { getHotQuestions } from "@/lib/actions/question.action";
 import { getTopTags } from "@/lib/actions/tag.action";
 import { Tag } from "@/types/global";

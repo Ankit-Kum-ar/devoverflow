@@ -1,4 +1,4 @@
-import ROUTES from "./route";
+import ROUTES from "../../constants/route";
 
 export const DEFAULT_EMPTY = {
   title: "No Data Found",

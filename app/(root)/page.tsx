@@ -7,10 +7,10 @@ import HomeFilter from "@/components/filters/HomeFilter";
 import Pagination from "@/components/Pagination";
 import LocalSearch from "@/components/search/LocalSearch";
 import { Button } from "@/components/ui/button";
+import ROUTES from "@/constants/route";
 import { getQuestions } from "@/lib/actions/question.action";
 
 import { HomePageFilters } from "../constants/filters";
-import ROUTES from "../constants/route";
 import { EMPTY_QUESTION } from "../constants/states";
 
 // This interface defines the expected structure of the search parameters that will be passed to the Home component. The searchParams property is a Promise that resolves to an object containing key-value pairs, where each key is a string representing the name of a query parameter and each value is a string representing the corresponding value of that parameter. This allows the Home component to access and utilize the search parameters from the URL for functionalities such as filtering or searching questions based on user input.
@@ -67,7 +67,11 @@ async function Home({ searchParams }: SearchParams) {
         render={(questions) => (
           <div className="mt-10 flex w-full flex-col gap-6">
             {questions.map((question) => (
-              <QuestionCard key={question._id} question={question} showActionBtns />
+              <QuestionCard
+                key={question._id}
+                question={question}
+                showActionBtns
+              />
             ))}
           </div>
         )}

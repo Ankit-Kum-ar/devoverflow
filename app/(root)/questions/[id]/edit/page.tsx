@@ -1,8 +1,8 @@
 import { notFound, redirect } from "next/navigation";
 
-import ROUTES from "@/app/constants/route";
 import { auth } from "@/auth";
 import QuestionForm from "@/components/forms/QuestionForm";
+import ROUTES from "@/constants/route";
 import { getQuestion } from "@/lib/actions/question.action";
 import { RouteParams } from "@/types/global";
 

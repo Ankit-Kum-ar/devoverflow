@@ -14,7 +14,6 @@ import {
 import { toast } from "sonner";
 import { z } from "zod";
 
-import ROUTES from "@/app/constants/route";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -25,6 +24,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import ROUTES from "@/constants/route";
 import { ActionResponse } from "@/types/global";
 
 interface AuthFormProps<T extends FieldValues> {

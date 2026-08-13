@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import { ClientSession } from "mongoose";
 import { revalidatePath } from "next/cache";
 
-import ROUTES from "@/app/constants/route";
+import ROUTES from "@/constants/route";
 import { Answer, Question, Vote } from "@/database";
 import {
   CreateVoteParams,

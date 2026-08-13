@@ -2,7 +2,6 @@ import { LogOut } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-import ROUTES from "@/app/constants/route";
 import { auth, signOut } from "@/auth";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,6 +11,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import ROUTES from "@/constants/route";
 
 import NavLinks from "./NavLinks";
 

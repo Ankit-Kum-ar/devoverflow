@@ -3,7 +3,7 @@
 import mongoose from "mongoose";
 import { revalidatePath } from "next/cache";
 
-import ROUTES from "@/app/constants/route";
+import ROUTES from "@/constants/route";
 import { Question } from "@/database";
 import Answer, { IAnswerDoc } from "@/database/answer.model";
 import { CreateAnswerParams, GetAnswerParams } from "@/types/action";

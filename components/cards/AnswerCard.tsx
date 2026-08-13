@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React, { Suspense } from "react";
 
-import ROUTES from "@/app/constants/route";
+import ROUTES from "@/constants/route";
 import { hasVoted } from "@/lib/actions/vote.action";
 import { cn, getTimeStamp } from "@/lib/utils";
 import { Answer } from "@/types/global";

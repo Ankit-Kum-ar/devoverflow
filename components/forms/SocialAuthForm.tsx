@@ -4,7 +4,7 @@ import Image from "next/image";
 import { signIn } from "next-auth/react";
 import { toast } from "sonner";
 
-import ROUTES from "@/app/constants/route";
+import ROUTES from "@/constants/route";
 
 import { Button } from "../ui/button";
 

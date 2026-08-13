@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import ROUTES from "@/app/constants/route";
+import ROUTES from "@/constants/route";
 import { cn, getDeviconClassName, getTechDescription } from "@/lib/utils";
 
 import { Badge } from "../ui/badge";
