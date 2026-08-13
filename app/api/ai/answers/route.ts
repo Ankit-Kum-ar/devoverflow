@@ -15,7 +15,7 @@ export async function POST(req: Request) {
       content,
     });
     if (!validatedData.success) {
-      return handleError(validatedData.error.flatten().fieldErrors);
+      return handleError(validatedData.error, "api");
     }
 
     const { text } = await generateText({
