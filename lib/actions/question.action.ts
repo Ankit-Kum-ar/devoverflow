@@ -3,6 +3,7 @@
 import type { Filter } from "mongodb";
 import mongoose from "mongoose";
 import { revalidatePath } from "next/cache";
+import { after } from "next/server";
 
 import { Answer, Collection, Vote } from "@/database";
 import Question, { IQuestionDoc } from "@/database/question.model";
@@ -34,7 +35,6 @@ import {
   PaginatedSearchSchema,
 } from "../validations";
 import { createInteraction } from "./interaction.action";
-import { after } from "next/server";
 
 export async function createQuestion(
   params: CreateQuestionParams

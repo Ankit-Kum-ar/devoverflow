@@ -3,6 +3,7 @@
 import mongoose from "mongoose";
 import { ClientSession } from "mongoose";
 import { revalidatePath } from "next/cache";
+import { after } from "next/server";
 
 import ROUTES from "@/constants/route";
 import { Answer, Question, Vote } from "@/database";
@@ -22,7 +23,6 @@ import {
   UpdateVoteCountSchema,
 } from "../validations";
 import { createInteraction } from "./interaction.action";
-import { after } from "next/server";
 
 export async function updateVoteCount(
   params: UpdateVoteCountParams,

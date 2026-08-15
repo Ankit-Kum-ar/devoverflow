@@ -2,6 +2,7 @@
 
 import mongoose from "mongoose";
 import { revalidatePath } from "next/cache";
+import { after } from "next/server";
 
 import ROUTES from "@/constants/route";
 import { Question, Vote } from "@/database";
@@ -25,7 +26,6 @@ import {
   GetAnswerSchema,
 } from "../validations";
 import { createInteraction } from "./interaction.action";
-import { after } from "next/server";
 
 export async function createAnswer(
   params: CreateAnswerParams
