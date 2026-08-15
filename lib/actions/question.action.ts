@@ -33,6 +33,8 @@ import {
   IncrementViewsSchema,
   PaginatedSearchSchema,
 } from "../validations";
+import { createInteraction } from "./interaction.action";
+import { after } from "next/server";
 
 export async function createQuestion(
   params: CreateQuestionParams
@@ -93,13 +95,23 @@ export async function createQuestion(
       { session }
     );
 
+    // log the interaction
+    after(async () => {
+      await createInteraction({
+        action: "post",
+        actionId: question._id.toString(),
+        actionTarget: "question",
+        authorId: userId as string,
+      });
+    });
+
     await session.commitTransaction();
     return { success: true, data: JSON.parse(JSON.stringify(question)) };
   } catch (error) {
     await session.abortTransaction();
     return handleError(error as Error) as ErrorResponse;
   } finally {
-    session.endSession();
+    await session.endSession();
   }
 }
 
@@ -420,6 +432,16 @@ export async function deleteQuestion(
     }).session(session);
 
     await Question.findByIdAndDelete(questionId).session(session);
+
+    // log the interaction
+    after(async () => {
+      await createInteraction({
+        action: "delete",
+        actionId: questionId,
+        actionTarget: "question",
+        authorId: user?.id as string,
+      });
+    });
 
     await session.commitTransaction();
     session.endSession();
