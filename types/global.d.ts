@@ -100,3 +100,32 @@ interface Badges {
   SILVER: number;
   BRONZE: number;
 }
+
+interface Job {
+  job_id?: string;
+  employer_name?: string;
+  employer_logo?: string;
+  employer_website?: string | null;
+  job_employment_type?: string;
+  job_title?: string;
+  job_description?: string;
+  job_apply_link?: string;
+  job_city?: string;
+  job_state?: string;
+  job_country?: string;
+  job_location?: string;
+  job_is_remote?: boolean;
+  job_posted_at?: string;
+  job_salary_string?: string | null;
+  job_min_salary?: number | null;
+  job_max_salary?: number | null;
+}
+
+interface Country {
+  names: {
+    common: string;
+  };
+  codes: {
+    alpha_2: string;
+  };
+}
