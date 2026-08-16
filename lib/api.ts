@@ -4,7 +4,12 @@ import { SignInWithOAuthParams } from "@/types/action";
 
 import { fetchHandler } from "./handlers/fetch";
 
-const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:3000/api";
+// const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:3000/api";
+const API_BASE_URL = process.env.API_BASE_URL;
+
+if (!API_BASE_URL) {
+  throw new Error("API_BASE_URL is not configured");
+}
 
 export const api = {
   auth: {
