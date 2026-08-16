@@ -31,7 +31,7 @@ const Pagination = ({ page = 1, isNext, containerClasses }: Props) => {
   return (
     <div
       className={cn(
-        "flex w-full items-center justify-center gap-2",
+        "flex w-full items-center justify-center gap-2 mt-3",
         containerClasses
       )}
     >
